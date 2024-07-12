@@ -2,7 +2,7 @@ import { pool } from '../db.js  ';
 export const userController = {
     getUsers: async(req, res) => {
         try {
-            const [rows] = await pool.query('SELECT * FROM usuarios');
+            const [rows] = await pool.query('SELECT * FROM listado_usuarios');
             res.send(rows);
         } catch (error) {
             console.error(error);
@@ -11,7 +11,7 @@ export const userController = {
 
     getUser:async(req, res) => {
         try {
-            const [rows] = await pool.query('SELECT * FROM usuarios WHERE id_usuarios = ?', [req.params.id]);
+            const [rows] = await pool.query('SELECT * FROM listado_usuarios WHERE id_usuarios = ?', [req.params.id]);
             if (rows.length >0) {
                 res.send(rows[0]);
             }else {
@@ -23,11 +23,12 @@ export const userController = {
     },
 
     createUser: async (req, res) => {
-        const { id_usuarios, nombres, usuario } = req.body;
-        const [result] = await pool.query('INSERT INTO usuarios (id_usuarios, nombres,usuario) VALUES (?,?,?)', [id_usuarios, nombres, usuario])
+        const { id_usuarios, nombres, apellidos, usuario } = req.body;
+        const [result] = await pool.query('INSERT INTO listado_usuarios ( id_usuarios, nombres, apellidos, usuario) VALUES (?,?,?,?)', [ id_usuarios, nombres, apellidos, usuario])
         res.send({ 
             id: result.insertId,
             nombres,
+            apellidos,
             usuario
          });
     },
@@ -38,7 +39,7 @@ export const userController = {
     
         try {
             const [result] = await pool.query(
-                'UPDATE usuarios SET nombres = ?, usuario = ? WHERE id_usuarios = ?',
+                'UPDATE usuarios SET nombres = ?, listado_usuarios = ? WHERE id_usuarios = ?',
                 [nombres, usuario, id_usuarios]
             );
     
@@ -46,7 +47,7 @@ export const userController = {
                 return res.status(404).json({ message: 'Usuario no encontrado' }); 
             }
     
-            const [rows] = await pool.query('SELECT * FROM usuarios WHERE id_usuarios = ?', [id_usuarios]);
+            const [rows] = await pool.query('SELECT * FROM listado_usuarios WHERE id_usuarios = ?', [id_usuarios]);
     
             res.json(rows);
         } catch (error) {
@@ -59,7 +60,7 @@ export const userController = {
         const { id_usuarios } = req.params;
 
         try {
-            const [result] = await pool.query('DELETE FROM usuarios WHERE id_usuarios = ?', [id_usuarios]);
+            const [result] = await pool.query('DELETE FROM listado_usuarios WHERE id_usuarios = ?', [id_usuarios]);
     
             if (result.affectedRows === 0) {
                 return res.status(404).json({ message: 'Usuario no encontrado' });
