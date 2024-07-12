@@ -11,7 +11,7 @@ export const machineController={
     getMachine:async(req, res) => {
         const id = req.params.id;
         try {
-            const [rows] = await pool.query('SELECT * FROM maquinas WHERE id_maquinas = ?', [id]);
+            const [rows] = await pool.query('SELECT * FROM listado_maquinas WHERE id_maquinas = ?', [id]);
             if (rows.length >0) {
                 res.send(rows[0]);
             }else {
@@ -54,10 +54,10 @@ export const machineController={
         }
     },
     deleteMachine: async (req, res) => {
-        const { id_usuarios } = req.params;
+        const { id_maquinas } = req.params;
 
         try {
-            const [result] = await pool.query('DELETE FROM listado_maquinas WHERE id_usuarios = ?', [id_maquinas]);
+            const [result] = await pool.query('DELETE FROM listado_maquinas WHERE id_maquinas = ?', [id_maquinas]);
     
             if (result.affectedRows === 0) {
                 return res.status(404).json({ message: 'Usuario no encontrado' });
