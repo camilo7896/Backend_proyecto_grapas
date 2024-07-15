@@ -43,7 +43,7 @@ export const machineController={
             );
     
             if (result.affectedRows === 0) {
-                return res.status(404).json({ message: 'Usuario no encontrado' }); 
+                return res.status(404).json({ message: 'No se ha encontrado maquina' }); 
             }
     
             const [rows] = await pool.query('SELECT * FROM listado_maquinas WHERE id_maquinas = ?', [id_maquinas]);
@@ -60,10 +60,10 @@ export const machineController={
             const [result] = await pool.query('DELETE FROM listado_maquinas WHERE id_maquinas = ?', [id_maquinas]);
     
             if (result.affectedRows === 0) {
-                return res.status(404).json({ message: 'Usuario no encontrado' });
+                return res.status(404).json({ message: 'No se ha encontrado maquina' });
             }
     
-            res.json({ message: 'Usuario eliminado exitosamente' });
+            res.json({ message: 'Maquina eliminada exitosamente' });
         } catch (error) {
             res.status(500).json({ error: error.message });
         }
