@@ -20,6 +20,7 @@
     "mysql": "^2.18.1",
     "mysql2": "^3.10.2",
     "nodemon": "^3.1.4",
+    "react-modal": "^3.16.1",
     "shortid": "^2.2.16"
   },
   "devDependencies": {
