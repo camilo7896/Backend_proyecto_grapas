@@ -106,8 +106,9 @@ export const asignamentsController = {
             const query = `
                 SELECT 
                     ap.id,
+                    u.id_usuarios,
                     u.nombres AS nombre_usuario,
-                    m.nombre_maquina,
+                    m.maquina,
                     r.nombre_referencia,
                     ap.horas_asignadas
                 FROM asignaciones_picado ap
@@ -131,7 +132,7 @@ export const asignamentsController = {
                 SELECT 
                     ap.id,
                     u.nombres AS nombre_usuario,
-                    m.nombre_maquina,
+                    m.maquina,
                     r.nombre_referencia,
                     ap.horas_asignadas
                 FROM asignaciones_picado ap
