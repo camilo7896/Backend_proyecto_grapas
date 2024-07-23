@@ -1,5 +1,7 @@
 import { pool } from '../db.js  ';
 export const registerController = {
+
+
   getRegisters: async (req, res) => {
     try {
       const query = `
@@ -33,16 +35,43 @@ export const registerController = {
     }
   },
 
-      createRegisters:async(req, res)=>{  
-        const { id_asignacion, horometro_inicial, horometro_final, observaciones,registro_maquina,id_usuarioRegistrador,registro_referencia,hora_asignadaRegistrador } = req.body;
-        try {
-          const [result] = await pool.query('INSERT INTO registro_horometros (id_asignacion, horometro_inicial, horometro_final, observaciones,registro_maquina,id_usuarioRegistrador,registro_referencia,hora_asignadaRegistrador) VALUES (?, ?, ?, ?,?,?,?,?)', [id_asignacion, horometro_inicial, horometro_final, observaciones, registro_maquina,id_usuarioRegistrador,registro_referencia,hora_asignadaRegistrador]);
-          res.status(201).json({ id: result.insertId });
-        } catch (error) {
-          console.error('Error creating registro horometros:', error);
-          res.status(500).send('Error creating registro horometros');
+  createRegisters: async (req, res) => {
+    const registros = req.body;
+
+    // Verificar si `registros` es un array
+    if (!Array.isArray(registros)) {
+        return res.status(400).send('Se esperaba un array de registros');
+    }
+
+    // Verificar que cada registro tenga los campos necesarios
+    for (const registro of registros) {
+        if (!registro.id_asignacion || registro.horometro_inicial === undefined || registro.horometro_final === undefined || !registro.registro_maquina || !registro.id_usuarioRegistrador || !registro.registro_referencia || !registro.hora_asignadaRegistrador) {
+            return res.status(400).send('Faltan datos requeridos en uno o más registros');
         }
-      }
+    }
+
+    try {
+        const queries = registros.map(registro =>
+            pool.query('INSERT INTO registro_horometros (id_asignacion, horometro_inicial, horometro_final, observaciones, registro_maquina, id_usuarioRegistrador, registro_referencia, hora_asignadaRegistrador) VALUES (?, ?, ?, ?, ?, ?, ?, ?)', [
+                registro.id_asignacion,
+                registro.horometro_inicial || 0,
+                registro.horometro_final || 0,
+                registro.observaciones || '',
+                registro.registro_maquina,
+                registro.id_usuarioRegistrador,
+                registro.registro_referencia,
+                registro.hora_asignadaRegistrador
+            ])
+        );
+
+        await Promise.all(queries);
+
+        res.status(201).send('Registros creados exitosamente');
+    } catch (error) {
+        console.error('Error creando registros de horómetros:', error);
+        res.status(500).send(`Error creando registros de horómetros: ${error.message}`);
+    }
+}
     }
 
     

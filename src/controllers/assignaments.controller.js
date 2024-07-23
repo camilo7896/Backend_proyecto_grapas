@@ -28,14 +28,15 @@ export const asignamentsController = {
 
     // Crear una nueva asignación
     createAsignacion: async (req, res) => {
-        const { id_usuarioAsignado, id_maquinaAsignada, id_referenciaAsignada } = req.body;
+        const { id_usuarioAsignado, id_maquinaAsignada, id_referenciaAsignada,horas_asignadas } = req.body;
         try {
-            const [result] = await pool.query('INSERT INTO asignaciones_picado (id_usuarioAsignado, id_maquinaAsignada, id_referenciaAsignada) VALUES (?, ?, ?)', [id_usuarioAsignado, id_maquinaAsignada, id_referenciaAsignada]);
+            const [result] = await pool.query('INSERT INTO asignaciones_picado (id_usuarioAsignado, id_maquinaAsignada, id_referenciaAsignada,horas_asignadas) VALUES (?, ?, ?,?)', [id_usuarioAsignado, id_maquinaAsignada, id_referenciaAsignada,horas_asignadas]);
             res.send({
                 id: result.insertId,
                 id_usuarioAsignado,
                 id_maquinaAsignada,
                 id_referenciaAsignada,
+                horas_asignadas,
             });
         } catch (error) {
             console.error(error);
