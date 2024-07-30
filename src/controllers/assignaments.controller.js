@@ -86,10 +86,10 @@ export const asignamentsController = {
         const asignaciones = req.body;
         try {
             const promises = asignaciones.map(asignacion => {
-                const { id_usuarioAsignado, id_maquinaAsignada, id_referenciaAsignada } = asignacion;
+                const { id_usuarioAsignado, id_maquinaAsignada, id_referenciaAsignada,id_standar,horas_asignadas } = asignacion;
                 return pool.query(
-                    'INSERT INTO asignaciones_picado (id_usuarioAsignado, id_maquinaAsignada, id_referenciaAsignada) VALUES (?, ?, ?)',
-                    [id_usuarioAsignado, id_maquinaAsignada, id_referenciaAsignada]
+                    'INSERT INTO asignaciones_picado (id_usuarioAsignado, id_maquinaAsignada, id_referenciaAsignada,id_standar,horas_asignadas) VALUES (?, ?, ?,?,?)',
+                    [id_usuarioAsignado, id_maquinaAsignada, id_referenciaAsignada,id_standar,horas_asignadas]
                 );
             });
             await Promise.all(promises);
@@ -111,7 +111,8 @@ export const asignamentsController = {
                     u.nombres AS nombre_usuario,
                     m.maquina,
                     r.nombre_referencia,
-                    ap.horas_asignadas
+                    ap.horas_asignadas,
+                    ap.id_standar
                 FROM asignaciones_picado ap
                 JOIN listado_usuarios u ON ap.id_usuarioAsignado = u.id_usuarios
                 JOIN listado_maquinas m ON ap.id_maquinaAsignada = m.id_maquinas

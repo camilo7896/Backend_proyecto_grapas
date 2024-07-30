@@ -10,5 +10,10 @@ router.get('/user-machines', registerController.getRegisters);
 
 router.post('/user-machines', registerController.createRegisters);
 
+router.get('/horometro-records', registerController.getHorometroRecords);
+
+router.get('/horometro-all', registerController.getLastHorometroRecords );
+
+
 
 export default router;
