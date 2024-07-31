@@ -48,6 +48,7 @@ export const userController = {
                 nombres,
                 apellidos,
                 usuario,
+                hashedPassword,
                 rol
             });
         } catch (error) {
