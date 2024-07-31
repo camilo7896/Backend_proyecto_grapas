@@ -26,12 +26,12 @@ export const userLoginController = {
             }
 
             // Genera un token JWT
-            const token = jwt.sign({ id: user.id, role: user.role }, SECRET_KEY, { expiresIn: '1h' });
+            const token = jwt.sign({ id: user.id, role: user.rol }, SECRET_KEY, { expiresIn: '1h' });
 
             res.json({
                 message: 'Autenticación exitosa',
                 token,
-                role: user.role
+                role: user.rol
             });
 
         } catch (error) {
