@@ -13,4 +13,11 @@ router.patch('/users/:id_usuarios', userController.updateUser);
 
 router.delete('/users/:id_usuarios', userController.deleteUser);
 
+
+
+
+
+
+
+
 export default router;

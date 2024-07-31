@@ -15,7 +15,7 @@ export const referenceController={
             if (rows.length >0) {
                 res.send(rows[0]);
             }else {
-            res.status(404).send('Maquina no encontrada');
+            res.status(404).send('No se ha encontrado referencia');
             }
         } catch (error) {
         console.error(error);
@@ -42,7 +42,7 @@ export const referenceController={
             );
     
             if (result.affectedRows === 0) {
-                return res.status(404).json({ message: 'Usuario no encontrado' }); 
+                return res.status(404).json({ message: 'No se encontro referencia' }); 
             }
     
             const [rows] = await pool.query('SELECT * FROM listado_referencias WHERE id_referencia = ?', [id_referencia]);
@@ -59,10 +59,10 @@ export const referenceController={
             const [result] = await pool.query('DELETE FROM listado_referencias WHERE id_referencia = ?', [id_referencia]);
     
             if (result.affectedRows === 0) {
-                return res.status(404).json({ message: 'Usuario no encontrado' });
+                return res.status(404).json({ message: 'Referencia no encontrada' });
             }
     
-            res.json({ message: 'Usuario eliminado exitosamente' });
+            res.json({ message: 'Referencia eliminada exitosamente' });
         } catch (error) {
             res.status(500).json({ error: error.message });
         }
