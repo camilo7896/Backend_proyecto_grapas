@@ -14,3 +14,5 @@ export const DB_PASSWORD = process.env.DB_PASSWORD || "Bitcoin*24";
 export const DB_DATABASE = process.env.DB_DATABASE || 'db_puntilas';
 
 export const DB_PORT = process.env.DB_PORT || 3306
+
+export const APP_URL = process.env.APP_URL || 'http://localhost';
