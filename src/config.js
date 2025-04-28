@@ -9,7 +9,7 @@ export const DB_HOST = process.env.DB_HOST || "localhost";
 
 export const DB_USER = process.env.DB_USER || "root";
 
-export const DB_PASSWORD = process.env.DB_PASSWORD || "Bitcoin*24";
+export const DB_PASSWORD = process.env.DB_PASSWORD || "Lpnn3a1970";
 
 export const DB_DATABASE = process.env.DB_DATABASE || 'db_puntilas';
 
